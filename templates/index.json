@@ -78,21 +78,29 @@
         "tab_xWWLeE": {
           "type": "tab",
           "settings": {
-            "tab_name": "Ravi",
-            "collection": "frontpage"
+            "tab_name": "Tab 1",
+            "collection": "collection-1"
           }
         },
         "tab_GcgABr": {
           "type": "tab",
           "settings": {
-            "tab_name": "Chauhan",
-            "collection": "frontpage"
+            "tab_name": "Tab 2",
+            "collection": "collection-2"
+          }
+        },
+        "tab_8TaqgR": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Tab 3",
+            "collection": "collection-3"
           }
         }
       },
       "block_order": [
         "tab_xWWLeE",
-        "tab_GcgABr"
+        "tab_GcgABr",
+        "tab_8TaqgR"
       ],
       "name": "Tabbed Product Grid",
       "settings": {
