@@ -77,12 +77,19 @@ Tabbed Product Grid Section
       tab.addEventListener('click', function () {
         // Deactivate all tabs and hide all tab contents
         tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(content => content.classList.add('hidden'));
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+          content.classList.remove('block');
+        });
 
         // Activate the clicked tab and show its content
         this.classList.add('active');
         const tabId = this.getAttribute('data-tab');
-        document.getElementById(tabId).classList.remove('hidden');
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) {
+          activeContent.classList.remove('hidden');
+          activeContent.classList.add('block');
+        }
       });
     });
   });
