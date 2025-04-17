@@ -21,7 +21,7 @@ Tabbed Product Grid Section
     </div>
 
     <!-- Tabs -->
-    <div class="tabs flex space-x-4">
+    <div class="tabs flex space-x-4 mt-4">
       {% for tab in section.blocks %}
         <button 
           class="tab {% if forloop.first %}active{% endif %}" 
@@ -32,15 +32,15 @@ Tabbed Product Grid Section
     </div>
 
     <!-- Product Grid -->
-    <div class="product-grid grid {% if section.settings.grid_layout == 'grid_mix' %}grid-mix{% endif %}" 
-         style="grid-template-columns: repeat({{ section.settings.columns }}, 1fr); 
-                gap: {{ section.settings.gap }};">
-      {% for tab in section.blocks %}
-        <div class="tab-content {% if forloop.first %}block{% else %}hidden{% endif %}" id="{{ tab.id }}">
-          {% assign collection_handle = tab.settings.collection %}
-          {% assign collection = collections[collection_handle] %}
-          {% if collection and collection.products and collection.products.size > 0 %}
-            {% for product in collection.products | slice: 0, section.settings.max_products %}
+    {% for tab in section.blocks %}
+      <div class="tab-content {% if forloop.first %}block{% else %}hidden{% endif %} mt-6" id="{{ tab.id }}">
+        {% assign collection_handle = tab.settings.collection %}
+        {% assign collection = collections[collection_handle] %}
+        {% if collection and collection.products and collection.products.size > 0 %}
+          <div class="product-grid grid {% if section.settings.grid_layout == 'grid_mix' %}grid-mix{% endif %}" 
+               style="grid-template-columns: repeat({{ section.settings.columns }}, 1fr); 
+                      gap: {{ section.settings.gap }};">
+            {% for product in collection.products limit: section.settings.max_products %}
               <div class="product">
                 <a href="{{ product.url }}">
                   <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
@@ -49,12 +49,12 @@ Tabbed Product Grid Section
                 </a>
               </div>
             {% endfor %}
-          {% else %}
-            <p class="no-products">No products available in this collection. Please check back later.</p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+          </div>
+        {% else %}
+          <p class="no-products">No products available in this collection. Please check back later.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
 </section>
 
