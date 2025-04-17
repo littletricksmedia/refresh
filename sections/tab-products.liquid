@@ -37,9 +37,10 @@ Tabbed Product Grid Section
                 gap: {{ section.settings.gap }};">
       {% for tab in section.blocks %}
         <div class="tab-content {% if forloop.first %}block{% else %}hidden{% endif %}" id="{{ tab.id }}">
-          {% assign products = tab.settings.collection.products | slice: 0, section.settings.max_products %}
-          {% if products.size > 0 %}
-            {% for product in products %}
+          {% assign collection_handle = tab.settings.collection %}
+          {% assign collection = collections[collection_handle] %}
+          {% if collection and collection.products.size > 0 %}
+            {% for product in collection.products | slice: 0, section.settings.max_products %}
               <div class="product">
                 <a href="{{ product.url }}">
                   <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
