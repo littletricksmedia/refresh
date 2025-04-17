@@ -76,15 +76,17 @@ Tabbed Product Grid Section
 
     tabs.forEach(tab => {
       tab.addEventListener('click', function () {
-        // Deactivate all tabs and hide all tab contents
+        // Deactivate all tabs
         tabs.forEach(t => t.classList.remove('active'));
+        // Hide all tab contents
         tabContents.forEach(content => {
           content.classList.add('hidden');
           content.classList.remove('block');
         });
 
-        // Activate the clicked tab and show its content
+        // Activate the clicked tab
         this.classList.add('active');
+        // Show the corresponding tab content
         const tabId = this.getAttribute('data-tab');
         const activeContent = document.getElementById(tabId);
         if (activeContent) {
