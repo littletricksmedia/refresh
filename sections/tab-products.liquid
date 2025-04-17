@@ -5,7 +5,12 @@ Tabbed Product Grid Section
 <section class="tabbed-product-grid">
   <div class="container">
     <!-- Heading -->
-    <div class="heading {{ section.settings.layout == 'horizontal' ? 'flex flex-row' : 'flex flex-col' }}">
+    <div class="heading 
+      {% if section.settings.layout == 'horizontal' %}
+        flex flex-row
+      {% else %}
+        flex flex-col
+      {% endif %}">
       <h2 class="{{ section.settings.heading_size }}">
         {{ section.settings.heading | escape }}
         {% if section.settings.highlight_style == 'underline' %}
@@ -19,7 +24,7 @@ Tabbed Product Grid Section
     <div class="tabs flex space-x-4">
       {% for tab in section.blocks %}
         <button 
-          class="tab {{ forloop.first ? 'active' : '' }}" 
+          class="tab {% if forloop.first %}active{% endif %}" 
           data-tab="{{ tab.id }}">
           {{ tab.settings.tab_name }}
         </button>
@@ -27,11 +32,11 @@ Tabbed Product Grid Section
     </div>
 
     <!-- Product Grid -->
-    <div class="product-grid grid {{ section.settings.grid_layout == 'grid_mix' ? 'grid-mix' : '' }}" 
+    <div class="product-grid grid {% if section.settings.grid_layout == 'grid_mix' %}grid-mix{% endif %}" 
          style="grid-template-columns: repeat({{ section.settings.columns }}, 1fr); 
                 gap: {{ section.settings.gap }};">
       {% for tab in section.blocks %}
-        <div class="tab-content {{ forloop.first ? 'block' : 'hidden' }}" id="{{ tab.id }}">
+        <div class="tab-content {% if forloop.first %}block{% else %}hidden{% endif %}" id="{{ tab.id }}">
           {% assign products = tab.settings.collection.products | slice: 0, section.settings.max_products %}
           {% for product in products %}
             <div class="product">
