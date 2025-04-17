@@ -40,7 +40,9 @@
             >
           {%- endif -%}
           <p class="announcement-bar__message h5">
-            <span>{{ section.blocks.first.settings.text | escape }}</span>
+            <marquee behavior="{{ section.settings.marquee_behavior }}" direction="{{ section.settings.marquee_direction }}">
+              <span>{{ section.blocks.first.settings.text | escape }}</span>
+            </marquee>
             {%- if section.blocks.first.settings.link != blank -%}
               {{- 'icon-arrow.svg' | inline_asset_content -}}
             {%- endif -%}
@@ -227,6 +229,29 @@
       "default": false,
       "label": "t:sections.announcement-bar.settings.enable_language_selector.label",
       "info": "t:sections.announcement-bar.settings.enable_language_selector.info"
+    },
+    {
+      "type": "select",
+      "id": "marquee_behavior",
+      "label": "Marquee Behavior",
+      "default": "scroll",
+      "options": [
+        { "value": "scroll", "label": "Scroll" },
+        { "value": "slide", "label": "Slide" },
+        { "value": "alternate", "label": "Alternate" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "marquee_direction",
+      "label": "Marquee Direction",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" },
+        { "value": "up", "label": "Up" },
+        { "value": "down", "label": "Down" }
+      ]
     }
   ],
   "blocks": [
