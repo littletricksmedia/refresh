@@ -102,11 +102,13 @@
                       >
                     {%- endif -%}
                     <p class="announcement-bar__message h5">
-                      <span>{{ block.settings.text | escape }}</span>
-                      {%- if block.settings.link != blank -%}
-                        {{- 'icon-arrow.svg' | inline_asset_content -}}
-                      {%- endif -%}
-                    </p>
+            <marquee behavior="{{ section.settings.marquee_behavior }}" direction="{{ section.settings.marquee_direction }}">
+              <span>{{ section.blocks.first.settings.text | escape }}</span>
+            </marquee>
+            {%- if section.blocks.first.settings.link != blank -%}
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            {%- endif -%}
+          </p>
                     {%- if block.settings.link != blank -%}
                       </a>
                     {%- endif -%}
