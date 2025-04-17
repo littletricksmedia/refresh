@@ -38,15 +38,19 @@ Tabbed Product Grid Section
       {% for tab in section.blocks %}
         <div class="tab-content {% if forloop.first %}block{% else %}hidden{% endif %}" id="{{ tab.id }}">
           {% assign products = tab.settings.collection.products | slice: 0, section.settings.max_products %}
-          {% for product in products %}
-            <div class="product">
-              <a href="{{ product.url }}">
-                <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
-                <h3>{{ product.title }}</h3>
-                <p>{{ product.price | money }}</p>
-              </a>
-            </div>
-          {% endfor %}
+          {% if products.size > 0 %}
+            {% for product in products %}
+              <div class="product">
+                <a href="{{ product.url }}">
+                  <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+                  <h3>{{ product.title }}</h3>
+                  <p>{{ product.price | money }}</p>
+                </a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No products available in this collection.</p>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -54,11 +58,34 @@ Tabbed Product Grid Section
 </section>
 
 <style>
-  .tab { /* Tab styles */ }
-  .tab.active { font-weight: bold; color: black; }
+  .tab { cursor: pointer; padding: 0.5rem 1rem; border: 1px solid #ccc; border-radius: 4px; }
+  .tab.active { font-weight: bold; color: black; background-color: #f0f0f0; }
   .tab:not(.active) { color: gray; }
-  .product-grid { /* Grid styles */ }
+  .product-grid { margin-top: 1rem; }
+  .tab-content.hidden { display: none; }
+  .product { text-align: center; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; }
+  .product img { max-width: 100%; height: auto; margin-bottom: 0.5rem; }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function () {
+        // Deactivate all tabs and hide all tab contents
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.add('hidden'));
+
+        // Activate the clicked tab and show its content
+        this.classList.add('active');
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.remove('hidden');
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
